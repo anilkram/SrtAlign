@@ -7,8 +7,8 @@ Requirements:
 ------------
 
 * Gentle force aligner: https://github.com/lowerquality/gentle
-* PySrt: https://github.com/lowerquality/gentle
-* ffmpeg: https://github.com/lowerquality/gentle
+* PySrt: https://pypi.python.org/pypi/pysrt
+* ffmpeg: https://www.ffmpeg.org/download.html
 
 Prep:
 ----
