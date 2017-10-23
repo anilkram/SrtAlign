@@ -17,11 +17,11 @@ USAGE:
 -> This script takes as input three directories:
     * gentledir: Directory containing gentle installation,
             specially the align.py dir
-    * audiodir: Directory containing audio files extracted 
+    * videodir: Directory containing audio files extracted 
             above using ffmpeg
     * srtdir: Directory containing srt files to be aligned
 -> File usage:
-    force_align_subtitles.py <gentledir> <audiodir> <srtdir>
+    force_align_subtitles.py <gentledir> <videodir> <srtdir>
 -> Output: the aligned subtitles are written in a newly created
 directory named alignedsrt in the same path as <srtdir>
 '''
@@ -36,14 +36,33 @@ import subprocess
 python3 = '/Users/anil/anaconda3/envs/python2.7/bin/python'
 p = argparse.ArgumentParser(description='Fix out of sync subtitles using gentle force aligner')
 p.add_argument("gentledir", type=str, help="Full/relative path for gentle installation dir")
-p.add_argument("audiodir", type=str, help="Full/relative path for audio files")
+p.add_argument("videodir", type=str, help="Full/relative path for video/audio files")
 p.add_argument("srtdir", type=str, help="Full/relative path for srt files (same name as audio)")
 
 a=p.parse_args()
 
 srtdir = a.srtdir.rstrip('/')
-audiodir = a.audiodir.rstrip('/')
+videodir = a.videodir.rstrip('/')
 gentledir = a.gentledir.rstrip('/')
+
+print("Extracting audio files")
+
+#Create new directory for audio files
+if not os.path.exists(videodir):
+    sys.exit("Video directory doesn't exist")
+audiodir = os.path.dirname(videodir) + '/audiofiles'
+os.mkdir(audiodir)
+
+videofiles = os.listdir(videodir)
+for video_f in videofiles:
+    audio_f = '.'.join(video_f.split('.')[:-1]) + '.wav'
+
+    command_str = 'ffmpeg -i {0}/{1} -vn {2}/{3}'.\
+        format(videodir, video_f, audiodir, audio_f)
+
+    print(command_str)
+
+    subprocess.call(command_str, shell=True)
 
 print("Extracting text files")
 #Extract text from srt

@@ -20,7 +20,7 @@ it takes as input three directories:
 * srtdir: Directory containing srt files to be aligned
 
 The run the script, use the following command:
-```force_align_subtitles.py <gentledir> <audiodir> <srtdir>```
+```fix_subtitle_timestamps.py <gentledir> <audiodir> <srtdir>```
 
 Output:
 ------
