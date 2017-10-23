@@ -10,21 +10,13 @@ Requirements:
 * PySrt: https://pypi.python.org/pypi/pysrt
 * ffmpeg: https://www.ffmpeg.org/download.html
 
-Prep:
-----
-
-* Extract audio from the media file using ffmpeg:
-
-```ffmpeg -i <mp4dir>/input.mp4 -vn <audiodir>/out.wav```
-
 Usage:
 -----
 This module was designed to convert several srt files in a batch; 
 it takes as input three directories:
 * gentledir: Directory containing gentle installation,
             specially the align.py dir
-* audiodir: Directory containing audio files extracted 
-            above using ffmpeg
+* mp4dir: Directory containing video/audio files to align with srt
 * srtdir: Directory containing srt files to be aligned
 
 The run the script, use the following command:
