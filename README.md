@@ -13,8 +13,7 @@ Requirements:
 Prep:
 ----
 
-* Download srt 
-Extract audio from the media file using ffmpeg:
+* Extract audio from the media file using ffmpeg:
 
 ```ffmpeg -i <mp4dir>/input.mp4 -vn <audiodir>/out.wav```
 
