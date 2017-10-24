@@ -9,16 +9,11 @@ PRE-REQUISITES:
 -> pysrt: https://pypi.python.org/pypi/pysrt
 -> ffmpeg: https://www.ffmpeg.org/download.html
 
-PREP:
--> Extract audio from the media file using ffmpeg
-    ffmpeg -i <mp4dir>/input.mp4 -vn <wavdir>/out.wav
-
 USAGE:
 -> This script takes as input three directories:
     * gentledir: Directory containing gentle installation,
             specially the align.py dir
-    * videodir: Directory containing audio files extracted 
-            above using ffmpeg
+    * videodir: Directory containing video files 
     * srtdir: Directory containing srt files to be aligned
 -> File usage:
     force_align_subtitles.py <gentledir> <videodir> <srtdir>
