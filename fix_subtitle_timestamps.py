@@ -11,8 +11,8 @@ PRE-REQUISITES:
 
 USAGE:
 -> This script takes as input three directories:
-    * gentledir: Directory containing gentle installation,
-            specially the align.py dir
+    * gentledir: Directory containing gentle source code,
+            in specific the align.py file
     * videodir: Directory containing video files 
     * srtdir: Directory containing srt files to be aligned
 -> File usage:
