@@ -8,6 +8,7 @@ PRE-REQUISITES:
 -> gentle: https://github.com/lowerquality/gentle
 -> pysrt: https://pypi.python.org/pypi/pysrt
 -> ffmpeg: https://www.ffmpeg.org/download.html
+-> python2.7 for gentle
 
 USAGE:
 -> This script takes as input three directories:
@@ -15,6 +16,7 @@ USAGE:
             in specific the align.py file
     * videodir: Directory containing video files 
     * srtdir: Directory containing srt files to be aligned
+-> Set path for python2.7 below before execution
 -> File usage:
     force_align_subtitles.py <gentledir> <videodir> <srtdir>
 -> Output: the aligned subtitles are written in a newly created
