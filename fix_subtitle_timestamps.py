@@ -28,7 +28,7 @@ import subprocess
 #from extract_srt import extract_srt
 #from extract_text import extract_text
 
-python3 = '/Users/anil/anaconda3/envs/python2.7/bin/python'
+python2 = '/Users/anil/anaconda3/envs/python2.7/bin/python'
 p = argparse.ArgumentParser(description='Fix out of sync subtitles using gentle force aligner')
 p.add_argument("gentledir", type=str, help="Full/relative path for gentle installation dir")
 p.add_argument("videodir", type=str, help="Full/relative path for video/audio files")
@@ -52,8 +52,6 @@ if not os.path.exists(videodir):
 audiodir = os.path.dirname(videodir) + '/audiofiles'
 if not os.path.exists(audiodir):
     os.mkdir(audiodir)
-else:
-    os.mkdir(audiodir+num2str(counter))
 
 videofiles = os.listdir(videodir)
 for video_f in videofiles:
@@ -115,7 +113,7 @@ for audio_f in audiofiles:
 
     out_f = outdir + '/' + audio_f[:-4] + '.json'
     command_str = '{0} {1}/align.py {2}/{3} {4}/{5} -o {6}'.\
-        format(python3, gentledir, audiodir, audio_f, textdir, text_f, out_f)
+        format(python2, gentledir, audiodir, audio_f, textdir, text_f, out_f)
 
 #    print(command_str)
 
