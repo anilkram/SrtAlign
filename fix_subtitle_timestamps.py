@@ -40,13 +40,20 @@ srtdir = a.srtdir.rstrip('/')
 videodir = a.videodir.rstrip('/')
 gentledir = a.gentledir.rstrip('/')
 
+print("\n")
+print("----------------------")
 print("Extracting audio files")
+print("----------------------")
+print("\n")
 
 #Create new directory for audio files
 if not os.path.exists(videodir):
     sys.exit("Video directory doesn't exist")
 audiodir = os.path.dirname(videodir) + '/audiofiles'
-os.mkdir(audiodir)
+if not os.path.exists(audiodir):
+    os.mkdir(audiodir)
+else:
+    os.mkdir(audiodir+num2str(counter))
 
 videofiles = os.listdir(videodir)
 for video_f in videofiles:
@@ -59,7 +66,12 @@ for video_f in videofiles:
 
     subprocess.call(command_str, shell=True)
 
+print("\n")
+print("---------------------")
 print("Extracting text files")
+print("---------------------")
+print("\n")
+
 #Extract text from srt
 srtfiles = os.listdir(srtdir)
 textdir = os.path.dirname(srtdir) + '/text'
@@ -71,13 +83,18 @@ for srt_f in srtfiles:
         continue
 
     text_f = srt_f.replace('.srt', '.txt')
-    command_str = './extract_text.py {0}/{1} {2}/{3}'.format(srtdir, srt_f, textdir, text_f)
+    command_str = './extract_text.py {0}/{1} {2}/{3}'.\
+        format(srtdir, srt_f, textdir, text_f)
 
 #    print(command_str)
 
     subprocess.call(command_str, shell=True)
 
+print("\n")
+print("--------------")
 print("Running gentle")
+print("--------------")
+print("\n")
 
 #Run gentle
 audiofiles = os.listdir(audiodir)
@@ -104,7 +121,11 @@ for audio_f in audiofiles:
 
     subprocess.call(command_str, shell=True)
 
+print("\n")
+print("---------------------------------")
 print("Extracting srt from gentle output")
+print("---------------------------------")
+print("\n")
 
 #Extract srt from gentle output
 outfiles = os.listdir(outdir)
