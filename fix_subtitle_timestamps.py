@@ -14,8 +14,11 @@ USAGE:
 -> This script takes as input three directories:
     * gentledir: Directory containing gentle source code,
             in specific the align.py file
-    * videodir: Directory containing video files 
     * srtdir: Directory containing srt files to be aligned
+    * One of the following two should be supplied
+        - videodir: Directory containing video files 
+        - audeodir: Directory containing audeo files if available.
+            Saves time by avoiding extracting them again
 -> Set path for python2.7 below before execution
 -> File usage:
     force_align_subtitles.py <gentledir> <videodir> <srtdir>
@@ -33,38 +36,49 @@ import subprocess
 python2 = '/Users/anil/anaconda3/envs/python2.7/bin/python'
 p = argparse.ArgumentParser(description='Fix out of sync subtitles using gentle force aligner')
 p.add_argument("gentledir", type=str, help="Full/relative path for gentle installation dir")
-p.add_argument("videodir", type=str, help="Full/relative path for video/audio files")
 p.add_argument("srtdir", type=str, help="Full/relative path for srt files (same name as audio)")
+
+group = p.add_mutually_exclusive_group(required=True)
+group.add_argument('--videodir', type=str, dest='videodir', \
+    help='Full/relative path for video files')
+group.add_argument('--audiodir', type=str, dest='audiodir', \
+    help='Full/relative path for audio files')
 
 a=p.parse_args()
 
 srtdir = a.srtdir.rstrip('/')
-videodir = a.videodir.rstrip('/')
 gentledir = a.gentledir.rstrip('/')
 
-print("\n")
-print("----------------------")
-print("Extracting audio files")
-print("----------------------")
-print("\n")
+if a.audiodir != None:
+    audiodir = a.audiodir.rstrip('/')
+else:
+    videodir = a.videodir.rstrip('/')
 
-#Create new directory for audio files
-if not os.path.exists(videodir):
-    sys.exit("Video directory doesn't exist")
-audiodir = os.path.dirname(videodir) + '/audiofiles'
-if not os.path.exists(audiodir):
-    os.mkdir(audiodir)
+    #Extract audio files from videodir
 
-videofiles = os.listdir(videodir)
-for video_f in videofiles:
-    audio_f = '.'.join(video_f.split('.')[:-1]) + '.wav'
-
-    command_str = 'ffmpeg -i {0}/{1} -vn {2}/{3}'.\
-        format(videodir, video_f, audiodir, audio_f)
-
-    print(command_str)
-
-    subprocess.call(command_str, shell=True)
+    print("\n")
+    print("----------------------")
+    print("Extracting audio files")
+    print("----------------------")
+    print("\n")
+    
+    #Create new directory for audio files
+    if not os.path.exists(videodir):
+        sys.exit("Video directory doesn't exist")
+    audiodir = os.path.dirname(videodir) + '/audiofiles'
+    if not os.path.exists(audiodir):
+        os.mkdir(audiodir)
+    
+    videofiles = os.listdir(videodir)
+    for video_f in videofiles:
+        audio_f = '.'.join(video_f.split('.')[:-1]) + '.wav'
+    
+        command_str = 'ffmpeg -i {0}/{1} -vn {2}/{3}'.\
+            format(videodir, video_f, audiodir, audio_f)
+    
+        print(command_str)
+    
+        subprocess.call(command_str, shell=True)
 
 print("\n")
 print("---------------------")
